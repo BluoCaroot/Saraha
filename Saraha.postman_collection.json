@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "185d279d-97d8-43df-a2db-bb3edc9f1752",
+		"name": "Saraha",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31089172"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"assem\",\r\n    \"email\": \"assem@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"signup"
+							]
+						},
+						"description": "simple request where server checks for duplication of username or email and returns error in case of duplication or invalidity of email or returns succes in case of user registration"
+					},
+					"response": []
+				},
+				{
+					"name": "Signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"assem@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/signin",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"signin"
+							]
+						},
+						"description": "simple request where user can sign in with either email or password, may show unexpected behaviour when trying to log in with both email and username so it is not allowed"
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ahmed@gmail.com\",\r\n    \"username\": \"ahmedd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/?_id=657f63c3a5740eefd2fe20f2&loggedinID=657f63c3a5740eefd2fe20f2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "_id",
+									"value": "657f63c3a5740eefd2fe20f2"
+								},
+								{
+									"key": "loggedinID",
+									"value": "657f63c3a5740eefd2fe20f2"
+								}
+							]
+						},
+						"description": "simple request where server checks if id of user to be edited is same as user requesting to edit and returns error in case of unauthorization or duplication of data to be edited"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user/?_id=657f63c3a5740eefd2fe20f2&loggedinID=657f63c3a5740eefd2fe20f2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "_id",
+									"value": "657f63c3a5740eefd2fe20f2"
+								},
+								{
+									"key": "loggedinID",
+									"value": "657f63c3a5740eefd2fe20f2"
+								}
+							]
+						},
+						"description": "simple request where server checks if id of user to be deleted is same as user requesting to delete and returns error in case of unauthorization"
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user/?_id=657f63c3a5740eefd2fe20f2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "_id",
+									"value": "657f63c3a5740eefd2fe20f2"
+								}
+							]
+						},
+						"description": "simple request which gets data of user whose id is given and returns error in case of invalid id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "Send",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\" : \"message content\",\r\n    \"sentTo\" : \"657f63c3a5740eefd2fe20f2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/message",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"message"
+							]
+						},
+						"description": "Simple request which checks if user to send the message to is valid and sends it in case of validity otherwise returns error"
+					},
+					"response": []
+				},
+				{
+					"name": "View",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"loggedinID\": \"657f63c3a5740eefd2fe20f2\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/message",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"message"
+							],
+							"query": [
+								{
+									"key": "unread",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						},
+						"description": "simple request where user can get info on all messages or can specify an id and mark that certain message as read\n\nthere's also an optional query where user can set unread as true and only recieve unread messages however incase user doesn't have access to that message it retuns an error\n\nit's not allowed to send an id while unread is set to true since this can cause unexpected behaviour"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"657f66664fa443418c0e00b9\",\r\n    \"loggedinID\": \"657f63c3a5740eefd2fe20f2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/message",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"message"
+							]
+						},
+						"description": "simple request where server checks for validity of message id and checks if it's sent to the user requesting to delete it and returns error in case of unauthorization or deletes message in case of success"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

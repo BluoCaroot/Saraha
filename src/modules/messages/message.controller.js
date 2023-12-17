@@ -1,5 +1,6 @@
 import Message from "../../../DB/models/message.model.js"
 import User from "../../../DB/models/user.model.js"
+import * as validate from "../../utils/validate.js"
 
 
 export const SendMessage = async (req, res, next) =>
@@ -26,17 +27,18 @@ export const ViewMessages = async (req, res, next) =>
     const {_id, loggedinID} = req.body
     const {unread} = req.query
 
-
+    if (unread && _id)
+        return res.status(403).json({message: "not allowed to apply a filter when getting a specific message"})
     if (_id && !validate.ID(_id))
         return res.status(404).json({message: "invalid message id"})
     
-    const message = unread ? await Message.find({isViewed: false}) :
-    _id ? await Message.findByIdAndUpdate(_id, {sentTo: loggedinID}, {isViewed: true, $inc: {__v : 1}}) :
+    const message = parseInt(unread) ? await Message.find({isViewed: false}) :
+    _id ? await Message.findOneAndUpdate({_id, sentTo: loggedinID}, {isViewed: true, $inc: {__v : 1}}) :
     await Message.find({sentTo: loggedinID})
 
 
 
-    if (!message)
+    if (!message || !message.length)
         return res.status(_id ? 401 : 200).json({message: "no messages or missing permission"})
     
 

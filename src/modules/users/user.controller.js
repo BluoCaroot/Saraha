@@ -19,8 +19,8 @@ export const Signup = async (req, res, next) =>
     if (await User.findOne({email}))
         return res.status(400).json({message: "duplicate email"})
         
-    const hashed = bcrypt.hashSync(password, process.env.SALT_ROUNDS)
-    const user = await User.create({username, email, hashed})
+    const hashed = bcrypt.hashSync(password, parseInt(process.env.SALT_ROUNDS))
+    const user = await User.create({username, email, password: hashed})
     
     if (!user)
         return res.status(500).json({message: "user registration failed"})
@@ -34,6 +34,9 @@ export const Signin = async (req, res, next) =>
 
     if (!((username || email) && password))
         return res.status(400).json({message: "missing data"})
+
+    if (username && email)
+        return res.status(403).json({message: "logging in with both email and username is not allowed"})
 
     const user = await User.findOne({$or:[{username}, {email}]})
 
@@ -60,7 +63,7 @@ export const UpdateUser = async (req, res, next) =>
 
     if (username)
     {
-        if (await User.findOne({username}))
+        if (await User.findOne({username, _id: {$ne:_id}}))
             return res.status(400).json({message: "duplicate username"})
 
         obj.username = username
@@ -70,14 +73,13 @@ export const UpdateUser = async (req, res, next) =>
         if (!validate.Email(email))
             return res.status(400).json({message: "invalid email"})
 
-        if (await User.findOne({email}))
+        if (await User.findOne({email, _id: {$ne:_id}}))
             return res.status(400).json({message: "duplicate email"})
 
         obj.email = email
     }
     if (!validate.ID(_id))
         return res.status(404).json({message: "invalid user id"})
-
     const user = await User.findByIdAndUpdate(_id, obj)
 
     if (!user)
