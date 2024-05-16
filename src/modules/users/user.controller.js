@@ -49,7 +49,17 @@ export const Signin = async (req, res, next) =>
     if (!isPasswordMatch)
         return res.status(404).json({message: "invalid login credintals"})
 
-    res.status(200).json({message: "logged in successfully"})
+    const token = jwt.sign({ email, id: user._id, loggedIn: true }, process.env.JWT_SECRET_LOGIN, { expiresIn: '1d' })
+    user.token = token
+    const updatedUser = await user.save()
+    if (!updatedUser)
+        return next(new Error('An error occured, please try again later', { cause: 500 }))
+    res.status(200).json(
+    {
+        success: true,
+        message: 'User logged in successfully',
+        data: { token: process.env.TOKEN_PREFIX + token }
+    })
 
 }
 

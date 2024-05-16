@@ -28,8 +28,9 @@ const UserSchema = new Schema(
         type: Boolean,
         default: false
     },
-    profilePicture: String
-
+    profilePicture: String,
+    token: String
+    
 },
 {
     timestamps: true

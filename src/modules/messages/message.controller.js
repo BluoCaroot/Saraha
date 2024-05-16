@@ -25,7 +25,7 @@ export const SendMessage = async (req, res, next) =>
 
 export const ViewMessages = async (req, res, next) =>
 {
-    const {loggedinID} = req.params
+    const id = req.authUser._id
     const {_id, unread} = req.query
 
     if (unread && _id)
@@ -35,7 +35,7 @@ export const ViewMessages = async (req, res, next) =>
     
     const messages = parseInt(unread) ? await Message.find({isViewed: false}) :
     _id ? await Message.findOneAndUpdate({_id, sentTo: loggedinID}, {isViewed: true, $inc: {__v : 1}}) :
-    await Message.find({sentTo: loggedinID})
+    await Message.find({sentTo: id})
 
 
 
