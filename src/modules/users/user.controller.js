@@ -4,6 +4,7 @@ import * as validate from "../../utils/validate.js"
 
 export const Signup = async (req, res, next) =>
 {
+    console.log(req.body);
     const { username, email, password } = req.body
 
     if (!(username && email && password))

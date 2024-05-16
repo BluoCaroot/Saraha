@@ -7,6 +7,7 @@ export const SendMessage = async (req, res, next) =>
 {
     const { content, sentTo } = req.body
 
+    console.log()
     if (!(content && sentTo))
         return res.status(400).json({message: "missing data"})
 
@@ -24,8 +25,8 @@ export const SendMessage = async (req, res, next) =>
 
 export const ViewMessages = async (req, res, next) =>
 {
-    const {_id, loggedinID} = req.body
-    const {unread} = req.query
+    const {loggedinID} = req.params
+    const {_id, unread} = req.query
 
     if (unread && _id)
         return res.status(403).json({message: "not allowed to apply a filter when getting a specific message"})
