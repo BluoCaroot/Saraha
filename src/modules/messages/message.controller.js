@@ -33,17 +33,17 @@ export const ViewMessages = async (req, res, next) =>
     if (_id && !validate.ID(_id))
         return res.status(404).json({message: "invalid message id"})
     
-    const message = parseInt(unread) ? await Message.find({isViewed: false}) :
+    const messages = parseInt(unread) ? await Message.find({isViewed: false}) :
     _id ? await Message.findOneAndUpdate({_id, sentTo: loggedinID}, {isViewed: true, $inc: {__v : 1}}) :
     await Message.find({sentTo: loggedinID})
 
 
 
-    if (!message || !message.length)
+    if (!messages || !messages.length)
         return res.status(_id ? 401 : 200).json({message: "no messages or missing permission"})
     
 
-    res.status(200).json({message: "messages", message})
+    res.status(200).json({message: "messages", messages})
 }
 
 export const DeleteMessage = async (req, res, next) =>
