@@ -28,5 +28,5 @@ scheduleJob('*/14 * * * *', async () =>
 {
     axios.get(`${process.env.BASE_URL}/keep-alive`)
     .then(res => console.log(res.data))
-    .error(err => console.log(err)) 
+    .catch(err => console.log(err)) 
 })
