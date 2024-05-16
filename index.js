@@ -9,7 +9,7 @@ import { scheduleJob } from 'node-schedule'
 import axios from 'axios'
 
 config({path: "./config/dev.config.env"})
-const port = parseInt(process.env.port)
+const port = parseInt(process.env.PORT)
 const app = express()
 
 
